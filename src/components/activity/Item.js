@@ -4,11 +4,11 @@
 import { Text, View } from "react-native"
 
 
-export const ActivityItem = () => {
+export const ActivityItem = ({title}) => {
   return (
     <View>
       <Text>
-        I am activity item
+        {title}
       </Text>
     </View>
   )
