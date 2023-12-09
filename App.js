@@ -9,19 +9,22 @@ import { COLORS } from './src/variables/styles';
 
 export default function App() {
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
         <ActivityHomeScreen />
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeContainer: {
     flex: 1,
     backgroundColor: COLORS.black,
+  },
+  container: {
+    flex: 1,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',

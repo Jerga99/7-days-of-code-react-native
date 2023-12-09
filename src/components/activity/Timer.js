@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native"
 import { FlowHighlightView, FlowRow, FlowText } from "../overrides"
+import { COLORS } from "../../variables/styles"
 
 
 
@@ -12,7 +13,7 @@ export const ActivityTimer = () => {
         </FlowText>
       </FlowRow>
       <FlowRow style={styles.row}>
-        <FlowText>
+        <FlowText style={styles.time}>
           00:00:00
         </FlowText>
       </FlowRow>
@@ -26,5 +27,8 @@ const styles = StyleSheet.create({
   },
   row: {
     justifyContent: 'center',
+  },
+  time: {
+    color: COLORS.brightGreen
   }
 })
