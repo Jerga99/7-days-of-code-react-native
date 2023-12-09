@@ -13,6 +13,8 @@ export const FlowHighlightView = ({children, style}) => {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: COLORS.darkGray
+    backgroundColor: COLORS.darkGray,
+    borderRadius: 10,
+    padding: 15
   }
 })
