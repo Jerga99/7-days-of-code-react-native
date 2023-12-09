@@ -1,16 +1,14 @@
 
 
 
-import { View } from "react-native"
-import { FlowText } from "../overrides"
-
+import { FlowHighlightView, FlowText } from "../overrides"
 
 export const ActivityItem = ({title}) => {
   return (
-    <View>
+    <FlowHighlightView>
       <FlowText>
         {title}
       </FlowText>
-    </View>
+    </FlowHighlightView>
   )
 }

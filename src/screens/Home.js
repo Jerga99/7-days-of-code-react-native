@@ -2,7 +2,6 @@ import { FlatList, StyleSheet, View, Text } from "react-native";
 import { ActivityTimer } from "../components/activity/Timer";
 import { ActivityItem } from "../components/activity/Item";
 import data from "../data/activities.json";
-import { COLORS } from "../variables/styles";
 import { FlowText } from "../components/overrides";
 
 

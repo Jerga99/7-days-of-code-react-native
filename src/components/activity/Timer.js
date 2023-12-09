@@ -1,22 +1,21 @@
 import { View, StyleSheet } from "react-native"
-import { FlowText } from "../overrides"
+import { FlowHighlightView, FlowText } from "../overrides"
 
 
 
 export const ActivityTimer = () => {
   return (
-    <View style={styles.timerContainer}>
+    <FlowHighlightView style={styles.timerContainer}>
       <FlowText>
         I am activity timer
       </FlowText>
-    </View>
+    </FlowHighlightView>
   )
 }
 
 const styles = StyleSheet.create({
   timerContainer: {
     height: 70,
-    marginVertical: 10,
-    backgroundColor: 'red'
+    marginVertical: 10
   }
 })
