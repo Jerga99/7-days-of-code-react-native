@@ -3,17 +3,13 @@
 
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { ActivityTimer } from './src/components/activity/Timer';
-import { ActivityItem } from './src/components/activity/Item';
+import { StyleSheet, View } from 'react-native';
+import { ActivityHomeScreen } from './src/screens/Home';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ActivityTimer></ActivityTimer>
-      <ActivityItem></ActivityItem>
-      <ActivityItem></ActivityItem>
-      <ActivityItem></ActivityItem>
+      <ActivityHomeScreen />
       <StatusBar style="auto" />
     </View>
   );
