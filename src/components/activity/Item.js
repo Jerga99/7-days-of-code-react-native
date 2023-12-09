@@ -1,16 +1,16 @@
 
 
 
-import { Text, View } from "react-native"
-import { COLORS } from "../../variables/styles"
+import { View } from "react-native"
+import { FlowText } from "../overrides"
 
 
 export const ActivityItem = ({title}) => {
   return (
     <View>
-      <Text style={{color: COLORS.white}}>
+      <FlowText>
         {title}
-      </Text>
+      </FlowText>
     </View>
   )
 }

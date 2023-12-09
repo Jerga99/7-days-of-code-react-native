@@ -1,13 +1,14 @@
-import { Text, View, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
+import { FlowText } from "../overrides"
 
 
 
 export const ActivityTimer = () => {
   return (
     <View style={styles.timerContainer}>
-      <Text>
+      <FlowText>
         I am activity timer
-      </Text>
+      </FlowText>
     </View>
   )
 }

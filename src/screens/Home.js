@@ -3,6 +3,7 @@ import { ActivityTimer } from "../components/activity/Timer";
 import { ActivityItem } from "../components/activity/Item";
 import data from "../data/activities.json";
 import { COLORS } from "../variables/styles";
+import { FlowText } from "../components/overrides";
 
 
 export const ActivityHomeScreen = () => {
@@ -11,8 +12,8 @@ export const ActivityHomeScreen = () => {
     <View style={styles.screenContainer}>
       <ActivityTimer></ActivityTimer>
       <View style={styles.listHeading}>
-        <Text style={styles.text}>Activities</Text>
-        <Text style={styles.text}>Add</Text>
+        <FlowText style={styles.text}>Activities</FlowText>
+        <FlowText style={styles.text}>Add</FlowText>
       </View>
       <FlatList
         data={data}
@@ -39,6 +40,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     fontWeight: "bold",
-    color: COLORS.white
   }
 })
