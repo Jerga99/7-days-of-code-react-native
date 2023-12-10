@@ -1,10 +1,12 @@
 
 
 
-import { Animated, PanResponder, StyleSheet } from "react-native"
-import { FlowHighlightView, FlowRow, FlowText } from "../overrides"
-import { COLORS } from "../../variables/styles"
-import { useRef } from "react"
+import { Animated, PanResponder, StyleSheet } from "react-native";
+import { FlowHighlightView, FlowRow, FlowText } from "../overrides";
+import { COLORS } from "../../variables/styles";
+import { useRef } from "react";
+
+const TRESHOLD = 60;
 
 export const ActivityItem = ({title}) => {
   const pan = useRef(new Animated.ValueXY()).current;
@@ -13,8 +15,20 @@ export const ActivityItem = ({title}) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderTerminationRequest: () => false,
-      onPanResponderMove: Animated.event([
-        null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false}),
+      onPanResponderMove: (event, gestureState) => {
+        const currentX = gestureState.dx;
+
+        if (currentX > TRESHOLD) {
+          console.log("ACTIVATE!");
+        }
+
+        if (currentX < -TRESHOLD) {
+          console.log("DE-ACTIVATE");
+        }
+
+        Animated.event([
+          null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false})(event, gestureState)
+      },
       onPanResponderRelease: () => {
         Animated.spring(pan, {
           toValue: {x:0, y:0},
