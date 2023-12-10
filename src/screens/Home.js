@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import { loadDayFlowItems } from "../storage";
 
 
-export const ActivityHomeScreen = () => {
+export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
+
+  console.log(isStorageEnabled);
 
   useEffect(() => {
     const load = async () => {
