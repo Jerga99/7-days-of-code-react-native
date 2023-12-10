@@ -5,7 +5,7 @@ import defaultItems from "../data/activities.json";
 
 import { FlowRow, FlowText } from "../components/overrides";
 import { useEffect, useState } from "react";
-import { loadDayFlowItems } from "../storage";
+import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
@@ -20,6 +20,12 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     load()
   }, []);
 
+  const saveToStorage = (data) => {
+    if (isStorageEnabled) {
+      storeDayFlowItems(data);
+    }
+  }
+
   const checkActivity = ({id, state}) => {
     setActivities((activities) => {
       const candidateIdx = activities.findIndex(a => a.id === id);
@@ -29,7 +35,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
           a.id === id ? ({...a, isActive: state}) : ({...a, isActive: false})
         );
 
-        console.log(JSON.stringify(newActivities.map(a => a.isActive)));
+        saveToStorage(newActivities);
         return newActivities;
       }
 
