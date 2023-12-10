@@ -12,10 +12,14 @@ export const ActivityItem = ({title}) => {
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false,
       onPanResponderMove: Animated.event([
         null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false}),
       onPanResponderRelease: () => {
-        pan.extractOffset();
+        Animated.spring(pan, {
+          toValue: {x:0, y:0},
+          useNativeDriver: false,
+        }).start();
       }
     })
   ).current
