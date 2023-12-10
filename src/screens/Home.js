@@ -11,20 +11,31 @@ import { loadDayFlowItems } from "../storage";
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
 
-  console.log(isStorageEnabled);
-
   useEffect(() => {
     const load = async () => {
       const items = await loadDayFlowItems();
-      !items ? setActivities(defaultItems) : setActivities(items)
+      items ? setActivities(items) : setActivities(defaultItems);
     }
 
     load()
   }, []);
 
   const checkActivity = ({id, state}) => {
-    console.log(`Changing ${id} to active: ${state}`);
-  }
+    setActivities((activities) => {
+      const candidateIdx = activities.findIndex(a => a.id === id);
+
+      if (candidateIdx > -1) {
+        const newActivities = activities.map(a =>
+          a.id === id ? ({...a, isActive: state}) : ({...a, isActive: false})
+        );
+
+        console.log(JSON.stringify(newActivities.map(a => a.isActive)));
+        return newActivities;
+      }
+
+      return activities;
+    });
+  };
 
   return (
     <View style={styles.screenContainer}>
