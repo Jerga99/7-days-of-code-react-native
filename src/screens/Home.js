@@ -25,6 +25,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
       const candidateIdx = activities.findIndex(a => a.id === id);
 
       if (candidateIdx > -1) {
+        console.log("Changing State!");
         const newActivities = activities.map(a =>
           a.id === id ? ({...a, isActive: state}) : ({...a, isActive: false})
         );
