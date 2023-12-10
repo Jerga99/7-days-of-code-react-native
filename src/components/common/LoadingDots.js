@@ -3,56 +3,21 @@ import { FlowRow } from "../overrides"
 import { COLORS } from "../../variables/styles"
 import { useEffect, useRef } from "react"
 
+const createTimingAnim = (opacity, toValue, duration) =>
+  Animated.timing(opacity, {
+    toValue,
+    duration,
+    easing: Easing.ease,
+    useNativeDriver: false
+  });
 
-
-export const LoadingDots = () => {
-  const dot1Opacity = useRef(new Animated.Value(0)).current;
-  const dot2Opacity = useRef(new Animated.Value(0)).current;
-  const dot3Opacity = useRef(new Animated.Value(0)).current;
+export const LoadingDots = ({color}) => {
+  const dotColor = color || COLORS.white;
+  const dotOpacities = useRef(Array(3).fill(0).map(o => new Animated.Value(o))).current;
 
   useEffect(() => {
-    const dotShowAnimations = [
-      Animated.timing(dot1Opacity, {
-        toValue: 1,
-        duration: 700,
-        easing: Easing.ease,
-        useNativeDriver: false
-      }),
-      Animated.timing(dot2Opacity, {
-        toValue: 1,
-        duration: 700,
-        easing: Easing.ease,
-        useNativeDriver: false
-      }),
-      Animated.timing(dot3Opacity, {
-        toValue: 1,
-        duration: 700,
-        easing: Easing.ease,
-        useNativeDriver: false
-      })
-    ];
-
-    const dotHideAnimations = [
-      Animated.timing(dot1Opacity, {
-        toValue: 0,
-        duration: 500,
-        easing: Easing.ease,
-        useNativeDriver: false
-      }),
-      Animated.timing(dot2Opacity, {
-        toValue: 0,
-        duration: 500,
-        easing: Easing.ease,
-        useNativeDriver: false
-      }),
-      Animated.timing(dot3Opacity, {
-        toValue: 0,
-        duration: 500,
-        easing: Easing.ease,
-        useNativeDriver: false
-      })
-    ];
-
+    const dotShowAnimations = dotOpacities.map(opacity => createTimingAnim(opacity, 1, 700));
+    const dotHideAnimations = dotOpacities.map(opacity => createTimingAnim(opacity, 0, 500));
     const sequence = Animated.sequence([
       Animated.stagger(200, dotShowAnimations),
       Animated.delay(300),
@@ -69,18 +34,20 @@ export const LoadingDots = () => {
 
   return (
     <FlowRow>
-      <Animated.View style={{...styles.dot, opacity: dot1Opacity}} />
-      <Animated.View style={{...styles.dot, opacity: dot2Opacity}} />
-      <Animated.View style={{...styles.dot, opacity: dot3Opacity}} />
+      { dotOpacities.map((opacity, index) =>
+        <Animated.View
+          key={`dot-${index}`}
+          style={{...styles.dot, opacity, backgroundColor: dotColor}}
+        />
+      )}
     </FlowRow>
   )
 }
 
 const styles = StyleSheet.create({
   dot: {
-    backgroundColor: COLORS.white,
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     borderRadius: 5,
     marginHorizontal: 5
   }
