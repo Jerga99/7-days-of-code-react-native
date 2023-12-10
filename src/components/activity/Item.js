@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const TRESHOLD = 60;
 
-export const ActivityItem = ({title}) => {
+export const ActivityItem = ({title, id, onActivityChange}) => {
   const pan = useRef(new Animated.ValueXY()).current;
 
   const panResponder = useRef(
@@ -19,11 +19,11 @@ export const ActivityItem = ({title}) => {
         const currentX = gestureState.dx;
 
         if (currentX > TRESHOLD) {
-          console.log("ACTIVATE!");
+          onActivityChange({id, state: true});
         }
 
         if (currentX < -TRESHOLD) {
-          console.log("DE-ACTIVATE");
+          onActivityChange({id, state: false});
         }
 
         Animated.event([
