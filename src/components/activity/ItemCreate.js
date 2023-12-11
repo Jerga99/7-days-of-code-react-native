@@ -1,12 +1,21 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 import { FlowButton, FlowModal, FlowRow, FlowText } from "../overrides";
 import { COLORS } from "../../variables/styles";
+import { useState } from "react";
+import { generateRandomId } from "../../utils/functions";
 
 
 export const ItemCreate = () => {
+  const [newItem, setNewItem] = useState({
+    title: "",
+    id: "",
+    isActivate: false,
+    time: 0
+  });
 
   const confirm = () => {
-    console.log("Confirm!");
+    const _newItem = {...newItem, id: generateRandomId()}
+    console.log(_newItem);
   };
 
   const cancel = () => {
@@ -20,6 +29,7 @@ export const ItemCreate = () => {
     >
       <FlowText>Choose the name of the activity.</FlowText>
       <TextInput
+        onChangeText={(title) => setNewItem({...newItem, title})}
         style={styles.input}
         placeholder="Learn C#"
         placeholderTextColor={COLORS.semiDarkGray}
