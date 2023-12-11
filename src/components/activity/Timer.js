@@ -5,12 +5,12 @@ import { formatTime } from "../../utils/functions"
 
 
 
-export const ActivityTimer = ({time}) => {
+export const ActivityTimer = ({time, title}) => {
   return (
     <FlowHighlightView style={styles.timerContainer}>
       <FlowRow style={styles.row}>
         <FlowText>
-          No Activity
+          { title ? title : "No Activity"}
         </FlowText>
       </FlowRow>
       <FlowRow style={styles.row}>

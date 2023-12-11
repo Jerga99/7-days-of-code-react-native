@@ -6,10 +6,11 @@ import { FlowHighlightView, FlowRow, FlowText } from "../overrides";
 import { COLORS } from "../../variables/styles";
 import { useRef } from "react";
 import { LoadingDots } from "../common/LoadingDots";
+import { formatTime } from "../../utils/functions";
 
 const TRESHOLD = 60;
 
-export const ActivityItem = ({title, id, isActive, onActivityChange}) => {
+export const ActivityItem = ({title, id, isActive, time, onActivityChange}) => {
   const pan = useRef(new Animated.ValueXY()).current;
 
   const panResponder = useRef(
@@ -60,7 +61,7 @@ export const ActivityItem = ({title, id, isActive, onActivityChange}) => {
           { isActive ?
             <LoadingDots /> :
             <FlowText style={styles.time}>
-              00:00:00
+              {formatTime(time)}
             </FlowText>
           }
         </FlowRow>
