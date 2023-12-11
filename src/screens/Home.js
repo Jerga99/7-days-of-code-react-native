@@ -11,6 +11,7 @@ import { usePrevious } from "../utils/functions";
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
+  const [time, setTime] = useState(0);
 
   const startTimeRef = useRef(0);
   const timeRef = useRef(0);
@@ -56,6 +57,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
     if (timeDelta >= 100) {
       timeRef.current += timeDelta;
+      setTime(timeRef.current);
       startTimeRef.current = Date.now();
     }
 
@@ -87,7 +89,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
-      <ActivityTimer></ActivityTimer>
+      <ActivityTimer time={time}/>
       <FlowRow style={styles.listHeading}>
         <FlowText style={styles.text}>Activities</FlowText>
         <FlowText style={styles.text}>Add</FlowText>
