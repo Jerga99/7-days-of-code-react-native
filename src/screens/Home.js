@@ -20,6 +20,16 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     load()
   }, []);
 
+  useEffect(() => {
+    tick();
+  }, []);
+
+  const tick = () => {
+    const currentTime = Date.now();
+    console.log(currentTime);
+    requestAnimationFrame(tick);
+  };
+
   const saveToStorage = (data) => {
     if (isStorageEnabled) {
       storeDayFlowItems(data);
