@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View, Platform } from "react-native";
 import { ActivityTimer } from "../components/activity/Timer";
 import { ActivityItem } from "../components/activity/Item";
 import defaultItems from "../data/activities.json";
@@ -30,6 +30,23 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     }
 
     load()
+  }, []);
+
+  useEffect(() => {
+    const save = () => {
+      setActivities((activities) => {
+        updateTimeOnActiveItem(activities);
+        saveToStorage(activities);
+        return activities;
+      });
+    }
+
+    if (Platform.OS === "web") {
+      window.addEventListener("beforeunload", save);
+      return () => {
+        window.removeEventListener("beforeunload", save);
+      }
+    }
   }, []);
 
   useEffect(() => {
