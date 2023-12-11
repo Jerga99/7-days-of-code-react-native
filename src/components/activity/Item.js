@@ -10,8 +10,15 @@ import { formatTime } from "../../utils/functions";
 
 const TRESHOLD = 60;
 
-export const ActivityItem = ({title, id, isActive, time, onActivityChange}) => {
+export const ActivityItem = ({
+  title,
+  id,
+  isActive,
+  time,
+  onActivityChange, onSwipeStart, onSwipeEnd
+}) => {
   const pan = useRef(new Animated.ValueXY()).current;
+  const isSwipping = useRef(false);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -28,10 +35,17 @@ export const ActivityItem = ({title, id, isActive, time, onActivityChange}) => {
           onActivityChange({id, state: false});
         }
 
+        if (Math.abs(currentX) > TRESHOLD && !isSwipping.current) {
+          isSwipping.current = true;
+          onSwipeStart();
+        }
+
         Animated.event([
           null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false})(event, gestureState)
       },
       onPanResponderRelease: () => {
+        isSwipping.current = false;
+        onSwipeEnd();
         Animated.spring(pan, {
           toValue: {x:0, y:0},
           useNativeDriver: false,

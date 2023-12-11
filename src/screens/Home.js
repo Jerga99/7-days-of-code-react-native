@@ -15,6 +15,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
   const [time, setTime] = useState(0);
   const [showItemCreate, setShowItemCreate] = useState(false);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   const startTimeRef = useRef(0);
   const timeRef = useRef(0);
@@ -151,7 +152,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
         <FlowButton
           ghost
           type="primary"
-          onPress={() => setShowItemCreate(true)}
+          onPressIn={() => setShowItemCreate(true)}
           content={(props) =>
             <MaterialIcons
               name="playlist-add" {...props} />
@@ -159,12 +160,15 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
         />
       </FlowRow>
       <FlatList
+        scrollEnabled={scrollEnabled}
         data={activities}
         keyExtractor={({id}) => id}
         renderItem={({item}) =>
           <ActivityItem
             {...item}
             onActivityChange={checkActivity}
+            onSwipeStart={() => setScrollEnabled(false)}
+            onSwipeEnd={() => setScrollEnabled(true)}
           />
         }
       />
