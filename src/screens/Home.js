@@ -3,7 +3,7 @@ import { ActivityTimer } from "../components/activity/Timer";
 import { ActivityItem } from "../components/activity/Item";
 import defaultItems from "../data/activities.json";
 
-import { FlowRow, FlowText } from "../components/overrides";
+import { FlowButton, FlowRow, FlowText } from "../components/overrides";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 import { usePrevious } from "../utils/functions";
@@ -13,6 +13,7 @@ import { ItemCreate } from "../components/activity/ItemCreate";
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
   const [time, setTime] = useState(0);
+  const [showItemCreate, setShowItemCreate] = useState(false);
 
   const startTimeRef = useRef(0);
   const timeRef = useRef(0);
@@ -127,14 +128,22 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
-      <ItemCreate />
+      <ItemCreate
+        visible={showItemCreate}
+        onClose={() => setShowItemCreate(false)}
+      />
       <ActivityTimer
         time={time}
         title={activeItem?.title}
       />
       <FlowRow style={styles.listHeading}>
         <FlowText style={styles.text}>Activities</FlowText>
-        <FlowText style={styles.text}>Add</FlowText>
+        <FlowButton
+          ghost
+          type="primary"
+          onPress={() => setShowItemCreate(true)}
+          text={"Add"}
+        />
       </FlowRow>
       <FlatList
         data={activities}

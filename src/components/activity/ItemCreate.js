@@ -5,7 +5,7 @@ import { useState } from "react";
 import { generateRandomId } from "../../utils/functions";
 
 
-export const ItemCreate = () => {
+export const ItemCreate = ({visible, onClose}) => {
   const [newItem, setNewItem] = useState({
     title: "",
     id: "",
@@ -20,13 +20,14 @@ export const ItemCreate = () => {
 
   const cancel = () => {
     console.log("Cancel!");
+    onClose();
   };
 
   const isError = newItem.title === String("");
 
   return (
     <FlowModal
-      visible={true}
+      visible={visible}
       animationType={"fade"}
     >
       <FlowText>Choose the name of the activity.</FlowText>
