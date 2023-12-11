@@ -4,12 +4,15 @@ import { ActivityItem } from "../components/activity/Item";
 import defaultItems from "../data/activities.json";
 
 import { FlowRow, FlowText } from "../components/overrides";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
+
+  const startTimeRef = useRef(0);
+  const timeRef = useRef(0);
 
   useEffect(() => {
     const load = async () => {
@@ -21,12 +24,19 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
   }, []);
 
   useEffect(() => {
+    startTimeRef.current = new Date();
     tick();
   }, []);
 
   const tick = () => {
     const currentTime = Date.now();
-    console.log(currentTime);
+    const timeDelta = currentTime - startTimeRef.current;
+
+    if (timeDelta >= 100) {
+      timeRef.current += timeDelta;
+      startTimeRef.current = Date.now();
+    }
+
     requestAnimationFrame(tick);
   };
 
