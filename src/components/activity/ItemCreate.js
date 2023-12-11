@@ -22,6 +22,8 @@ export const ItemCreate = () => {
     console.log("Cancel!");
   };
 
+  const isError = newItem.title === String("");
+
   return (
     <FlowModal
       visible={true}
@@ -36,6 +38,7 @@ export const ItemCreate = () => {
       />
       <FlowRow style={{justifyContent: "space-around"}}>
         <FlowButton
+          disabled={isError}
           ghost
           type="primary"
           text={"Confirm"}
