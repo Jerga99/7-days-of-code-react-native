@@ -70,11 +70,19 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     }
   }
 
+  const updateTimeOnActiveItem = (activities) => {
+    const activeIdx = activities.findIndex(a => a.isActive);
+    if (activeIdx > -1) {
+      activities[activeIdx].time = timeRef.current;
+    }
+  }
+
   const checkActivity = ({id, state}) => {
     setActivities((activities) => {
       const candidateIdx = activities.findIndex(a => a.id === id);
 
       if (candidateIdx > -1 && activities[candidateIdx].isActive != state) {
+        updateTimeOnActiveItem(activities);
         const newActivities = activities.map(a =>
           a.id === id ? ({...a, isActive: state}) : ({...a, isActive: false})
         );
