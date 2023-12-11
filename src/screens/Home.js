@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View, Platform } from "react-native";
+import { FlatList, StyleSheet, View, Platform, AppState } from "react-native";
 import { ActivityTimer } from "../components/activity/Timer";
 import { ActivityItem } from "../components/activity/Item";
 import defaultItems from "../data/activities.json";
@@ -45,6 +45,17 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
       window.addEventListener("beforeunload", save);
       return () => {
         window.removeEventListener("beforeunload", save);
+      }
+    } else {
+      const handleAppStateChange = (appState) => {
+        if (appState === "background" || appState === "inactive") {
+          save();
+        }
+      };
+
+      const sub = AppState.addEventListener("change", handleAppStateChange);
+      return () => {
+        sub.remove();
       }
     }
   }, []);
