@@ -7,6 +7,7 @@ import { FlowRow, FlowText } from "../components/overrides";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 import { usePrevious } from "../utils/functions";
+import { ItemCreate } from "../components/activity/ItemCreate";
 
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
@@ -126,6 +127,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
+      <ItemCreate />
       <ActivityTimer
         time={time}
         title={activeItem?.title}
