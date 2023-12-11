@@ -8,7 +8,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 import { usePrevious } from "../utils/functions";
 import { ItemCreate } from "../components/activity/ItemCreate";
-
+import { MaterialIcons } from '@expo/vector-icons';
+import { COLORS } from "../variables/styles";
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
@@ -151,7 +152,10 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
           ghost
           type="primary"
           onPress={() => setShowItemCreate(true)}
-          text={"Add"}
+          content={(props) =>
+            <MaterialIcons
+              name="playlist-add" {...props} />
+          }
         />
       </FlowRow>
       <FlatList

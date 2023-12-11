@@ -42,13 +42,13 @@ export const ItemCreate = ({visible, onClose, onConfirm}) => {
           disabled={isError}
           ghost
           type="primary"
-          text={"Confirm"}
+          content={"Confirm"}
           onPress={confirm}
         />
         <FlowButton
           ghost
           type="danger"
-          text={"Cancel"}
+          content={"Cancel"}
           onPress={cancel}
         />
       </FlowRow>

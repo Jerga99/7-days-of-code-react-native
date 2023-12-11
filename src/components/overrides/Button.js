@@ -1,10 +1,10 @@
 import { Pressable, Text } from "react-native"
-import { COLORS } from "../../variables/styles"
+import { COLORS, SIZES } from "../../variables/styles"
 
 
 // "primary" "danger" "warning"
 
-export const FlowButton = ({text, ghost, disabled, type, ...rest}) => {
+export const FlowButton = ({content: Content, ghost, disabled, type, ...rest}) => {
   const color = type === "primary" ?
     COLORS.normalGreen : type === "danger" ?
     COLORS.brightRed : type === "warning" ?
@@ -32,7 +32,10 @@ export const FlowButton = ({text, ghost, disabled, type, ...rest}) => {
       disabled={isDisabled} {...rest}
       style={{...buttonStyle, userSelect: "none"}}
     >
-      <Text style={{...textStyle}}>{text}</Text>
+      {typeof Content === "string" ?
+        <Text style={{...textStyle}}>{Content}</Text> :
+        <Content color={textStyle.color} size={SIZES.fontExtraLarge} />
+      }
     </Pressable>
   )
 }
