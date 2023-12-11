@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
-import { FlowModal, FlowRow, FlowText } from "../overrides";
+import { FlowButton, FlowModal, FlowRow, FlowText } from "../overrides";
 import { COLORS } from "../../variables/styles";
 
 
@@ -24,13 +24,19 @@ export const ItemCreate = () => {
         placeholder="Learn C#"
         placeholderTextColor={COLORS.semiDarkGray}
       />
-      <FlowRow>
-        <Pressable onPress={confirm}>
-          <FlowText>Confirm</FlowText>
-        </Pressable>
-        <Pressable onPress={cancel}>
-          <FlowText>Cancel</FlowText>
-        </Pressable>
+      <FlowRow style={{justifyContent: "space-around"}}>
+        <FlowButton
+          ghost
+          type="primary"
+          text={"Confirm"}
+          onPress={confirm}
+        />
+        <FlowButton
+          ghost
+          type="danger"
+          text={"Cancel"}
+          onPress={cancel}
+        />
       </FlowRow>
     </FlowModal>
   )
