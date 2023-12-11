@@ -6,6 +6,7 @@ import defaultItems from "../data/activities.json";
 import { FlowRow, FlowText } from "../components/overrides";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
+import { usePrevious } from "../utils/functions";
 
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
@@ -17,7 +18,9 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   const activeItem = useMemo(() => {
     return activities?.find(a => a.isActive);
-  }, [activities])
+  }, [activities]);
+
+  const prevActiveItem = usePrevious(activeItem);
 
   useEffect(() => {
     const load = async () => {
@@ -29,11 +32,16 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
   }, []);
 
   useEffect(() => {
+    const isSameItem = activeItem && activeItem?.id === prevActiveItem?.id;
+
     if (activeItem) {
-      startTimeRef.current = new Date();
+      if (!isSameItem) {
+        timeRef.current = activeItem.time;
+        startTimeRef.current = new Date();
+      }
       tick();
     } else {
-      startTimeRef.current = 0;
+      timeRef.current = 0;
       cancelAnimationFrame(timerRequestRef.current);
     }
 
@@ -48,7 +56,6 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
     if (timeDelta >= 100) {
       timeRef.current += timeDelta;
-      console.log(timeRef.current);
       startTimeRef.current = Date.now();
     }
 
