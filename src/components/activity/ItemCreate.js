@@ -5,7 +5,7 @@ import { useState } from "react";
 import { generateRandomId } from "../../utils/functions";
 
 
-export const ItemCreate = ({visible, onClose}) => {
+export const ItemCreate = ({visible, onClose, onConfirm}) => {
   const [newItem, setNewItem] = useState({
     title: "",
     id: "",
@@ -15,11 +15,11 @@ export const ItemCreate = ({visible, onClose}) => {
 
   const confirm = () => {
     const _newItem = {...newItem, id: generateRandomId()}
-    console.log(_newItem);
+    onConfirm(_newItem);
+    cancel();
   };
 
   const cancel = () => {
-    console.log("Cancel!");
     onClose();
   };
 

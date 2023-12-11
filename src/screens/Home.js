@@ -126,10 +126,19 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     });
   };
 
+  const addItem = (newItem) => {
+    setActivities((activities) => {
+      const newActivities = [...activities, newItem];
+      saveToStorage(newActivities);
+      return newActivities;
+    });
+  }
+
   return (
     <View style={styles.screenContainer}>
       <ItemCreate
         visible={showItemCreate}
+        onConfirm={addItem}
         onClose={() => setShowItemCreate(false)}
       />
       <ActivityTimer
