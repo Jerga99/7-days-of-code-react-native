@@ -8,7 +8,7 @@ import { formatTime } from "../../utils/functions";
 
 
 
-export const ItemDetail = ({focusedItem}) => {
+export const ItemDetail = ({focusedItem, time}) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -38,7 +38,10 @@ export const ItemDetail = ({focusedItem}) => {
       <FlowHighlightView>
         <View>
           <FlowText style={styles.timer}>
-            {formatTime(focusedItem?.time)}
+            { focusedItem?.isActive ?
+              formatTime(time) :
+              formatTime(focusedItem?.time)
+            }
           </FlowText>
         </View>
         <View>

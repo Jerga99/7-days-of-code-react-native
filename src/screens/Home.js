@@ -142,6 +142,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     <View style={styles.screenContainer}>
       <ItemDetail
         focusedItem={focusedItem}
+        time={time}
       />
       <ItemCreate
         visible={showItemCreate}
