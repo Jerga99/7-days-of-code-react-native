@@ -9,7 +9,7 @@ import { loadDayFlowItems, storeDayFlowItems } from "../storage";
 import { usePrevious } from "../utils/functions";
 import { ItemCreate } from "../components/activity/ItemCreate";
 import { MaterialIcons } from '@expo/vector-icons';
-import { COLORS } from "../variables/styles";
+import { COLORS, SIZES } from "../variables/styles";
 import { ItemDetail } from "../components/activity/ItemDetail";
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
@@ -157,6 +157,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
         <FlowText style={styles.text}>Activities</FlowText>
         <FlowButton
           ghost
+          size={SIZES.fontExtraLarge}
           type="primary"
           onPressIn={() => setShowItemCreate(true)}
           content={(props) =>

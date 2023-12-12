@@ -4,8 +4,7 @@ import { FlowButton, FlowHighlightView, FlowModal, FlowText } from "../overrides
 import { useEffect, useState } from "react";
 import { COLORS, SIZES } from "../../variables/styles";
 import { formatTime } from "../../utils/functions";
-
-
+import { Ionicons } from '@expo/vector-icons';
 
 
 export const ItemDetail = ({focusedItem, time}) => {
@@ -56,7 +55,13 @@ export const ItemDetail = ({focusedItem, time}) => {
         </View>
       </FlowHighlightView>
       <View>
-        <FlowButton type={"danger"} content={"Delete"} style={styles.deleteButton}/>
+        <FlowButton
+          type={"danger"}
+          style={styles.deleteButton}
+          content={(props) =>
+            <Ionicons name="md-trash-outline" {...props} />
+          }
+        />
       </View>
     </FlowModal>
   )
@@ -68,6 +73,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginTop: 10,
+    display: "flex",
+    alignItems: "center"
   },
   timer: {
     color: COLORS.brightGreen,
