@@ -20,7 +20,8 @@ export const FlowModal = ({
   }
 
   const webStyles = Platform.OS === "web" ? {
-    width: 500,
+    width: "100%",
+    maxWidth: 500,
     margin: "auto"
   } : {};
 

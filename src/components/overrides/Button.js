@@ -4,7 +4,7 @@ import { COLORS, SIZES } from "../../variables/styles"
 
 // "primary" "danger" "warning"
 
-export const FlowButton = ({content: Content, ghost, disabled, type, ...rest}) => {
+export const FlowButton = ({content: Content, ghost, disabled, style, type, ...rest}) => {
   const color = type === "primary" ?
     COLORS.normalGreen : type === "danger" ?
     COLORS.brightRed : type === "warning" ?
@@ -30,7 +30,7 @@ export const FlowButton = ({content: Content, ghost, disabled, type, ...rest}) =
   return (
     <Pressable
       disabled={isDisabled} {...rest}
-      style={{...buttonStyle, userSelect: "none"}}
+      style={{...buttonStyle, ...style, userSelect: "none"}}
     >
       {typeof Content === "string" ?
         <Text style={{...textStyle}}>{Content}</Text> :
