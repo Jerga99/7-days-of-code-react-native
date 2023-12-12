@@ -10,7 +10,7 @@ export const FlowButton = ({content: Content, ghost, size, disabled, style, type
     COLORS.brightRed : type === "warning" ?
     COLORS.brightYellow : COLORS.brightBlue;
 
-  const _size = size ?? SIZES.fontMedium;
+  const _size = size ?? SIZES.fontSmall;
 
   const isDisabled = disabled ?? false;
   const isGhost = ghost ?? false;

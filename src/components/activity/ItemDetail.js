@@ -1,5 +1,5 @@
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { FlowButton, FlowHighlightView, FlowModal, FlowText } from "../overrides/index";
 import { useEffect, useState } from "react";
 import { COLORS, SIZES } from "../../variables/styles";
@@ -9,16 +9,22 @@ import { Ionicons } from '@expo/vector-icons';
 
 export const ItemDetail = ({focusedItem, time}) => {
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (focusedItem) {
       setShowModal(true);
-      setTitle(focusedItem.title)
-      setDescription(focusedItem.description)
+      setTitle(focusedItem.title);
+      setDescription(focusedItem.description);
+      setIsEditing(false);
     }
-  }, [focusedItem])
+  }, [focusedItem]);
+
+  const confirm = () => {
+    setIsEditing(false);
+  }
 
   return (
     <FlowModal
@@ -44,14 +50,47 @@ export const ItemDetail = ({focusedItem, time}) => {
           </FlowText>
         </View>
         <View>
-          <FlowText style={styles.title}>{title}</FlowText>
+          { isEditing ?
+            <TextInput
+              style={{...styles.title, ...styles.input}}
+              value={title}
+              placeholder="Activity name..."
+              placeholderTextColor={COLORS.semiDarkGray}
+              onChangeText={setTitle}
+            /> :
+            <FlowText style={styles.title}>{title}</FlowText>
+          }
         </View>
         <View>
-          <FlowText>{description}</FlowText>
+        { isEditing ?
+            <TextInput
+              style={{...styles.title, ...styles.input, ...styles.multilineInput}}
+              value={description}
+              placeholder="Info about activity..."
+              placeholderTextColor={COLORS.semiDarkGray}
+              onChangeText={setDescription}
+              multiline
+              numberOfLines={4}
+            /> :
+            <FlowText>{description}</FlowText>
+          }
         </View>
         <View style={{marginBottom: 20}} />
         <View>
-          <FlowButton ghost type={"primary"} content={"Edit"}/>
+          { isEditing ?
+            <FlowButton
+              onPressIn={confirm}
+              ghost
+              type={"primary"}
+              content={"Confirm"}
+            /> :
+            <FlowButton
+              onPressIn={() => setIsEditing(true)}
+              ghost
+              type={"primary"}
+              content={"Edit"}
+            />
+          }
         </View>
       </FlowHighlightView>
       <View>
@@ -82,5 +121,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: COLORS.semiDarkGray,
+    borderRadius: 5,
+    padding: 10,
+    fontWeight: "500",
+    color: COLORS.white
+  },
+  multilineInput: {
+    height: 100,
+    textAlignVertical: "top",
   }
 })
