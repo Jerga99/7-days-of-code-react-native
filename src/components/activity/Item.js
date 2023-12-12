@@ -1,7 +1,7 @@
 
 
 
-import { Animated, PanResponder, StyleSheet } from "react-native";
+import { Animated, PanResponder, StyleSheet, Platform } from "react-native";
 import { FlowHighlightView, FlowRow, FlowText } from "../overrides";
 import { COLORS } from "../../variables/styles";
 import { useRef } from "react";
@@ -9,6 +9,7 @@ import { LoadingDots } from "../common/LoadingDots";
 import { formatTime } from "../../utils/functions";
 
 const TRESHOLD = 60;
+const TAP_DELAY = 350;
 
 export const ActivityItem = ({
   title,
@@ -18,6 +19,7 @@ export const ActivityItem = ({
   onActivityChange, onSwipeStart, onSwipeEnd
 }) => {
   const pan = useRef(new Animated.ValueXY()).current;
+  const lastPressTimeRef = useRef(0);
   const isSwipping = useRef(false);
 
   const panResponder = useRef(
@@ -54,12 +56,29 @@ export const ActivityItem = ({
     })
   ).current
 
+  const handlePress = () => {
+    const currenTime = new Date().getTime();
+    const isDoubleClick = currenTime - lastPressTimeRef.current <= TAP_DELAY;
+
+    if (isDoubleClick) {
+      console.log("DOUBLE!");
+    } else {
+      lastPressTimeRef.current = currenTime;
+    }
+  }
+
   const itemBackground = isActive ?
     { backgroundColor: COLORS.semiDarkGray } :
     { backgroundColor: COLORS.darkGray }
 
   return (
     <Animated.View
+      onPointerDown={handlePress}
+      onTouchStart={() => {
+        if (Platform.OS !== "web") {
+          handlePress()
+        }
+      }}
       {...panResponder.panHandlers}
       style={{
         touchAction: "none",

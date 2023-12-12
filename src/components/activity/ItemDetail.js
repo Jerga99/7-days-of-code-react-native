@@ -8,7 +8,7 @@ import { COLORS, SIZES } from "../../variables/styles";
 
 
 export const ItemDetail = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <FlowModal
