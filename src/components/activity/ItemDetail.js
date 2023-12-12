@@ -1,14 +1,25 @@
 
 import { StyleSheet, View } from "react-native";
 import { FlowButton, FlowHighlightView, FlowModal, FlowText } from "../overrides/index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS, SIZES } from "../../variables/styles";
+import { formatTime } from "../../utils/functions";
 
 
 
 
-export const ItemDetail = () => {
+export const ItemDetail = ({focusedItem}) => {
   const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (focusedItem) {
+      setShowModal(true);
+      setTitle(focusedItem.title)
+      setDescription(focusedItem.description)
+    }
+  }, [focusedItem])
 
   return (
     <FlowModal
@@ -18,6 +29,7 @@ export const ItemDetail = () => {
       animationType={"fade"}
     >
       <FlowButton
+        onPressIn={() => setShowModal(false)}
         style={styles.backButton}
         ghost
         type={"primary"}
@@ -26,14 +38,14 @@ export const ItemDetail = () => {
       <FlowHighlightView>
         <View>
           <FlowText style={styles.timer}>
-            00:00:00
+            {formatTime(focusedItem?.time)}
           </FlowText>
         </View>
         <View>
-          <FlowText style={styles.title}>Some Title</FlowText>
+          <FlowText style={styles.title}>{title}</FlowText>
         </View>
         <View>
-          <FlowText>Some Description</FlowText>
+          <FlowText>{description}</FlowText>
         </View>
         <View style={{marginBottom: 20}} />
         <View>

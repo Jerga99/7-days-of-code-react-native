@@ -14,6 +14,7 @@ import { ItemDetail } from "../components/activity/ItemDetail";
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
+  const [focusedItem, setFocusedItem] = useState(null);
   const [time, setTime] = useState(0);
   const [showItemCreate, setShowItemCreate] = useState(false);
   const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -139,7 +140,9 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
-      <ItemDetail />
+      <ItemDetail
+        focusedItem={focusedItem}
+      />
       <ItemCreate
         visible={showItemCreate}
         onConfirm={addItem}
@@ -171,6 +174,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
             onActivityChange={checkActivity}
             onSwipeStart={() => setScrollEnabled(false)}
             onSwipeEnd={() => setScrollEnabled(true)}
+            onDoubleClick={() => setFocusedItem({...item})}
           />
         }
       />

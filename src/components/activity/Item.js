@@ -16,7 +16,7 @@ export const ActivityItem = ({
   id,
   isActive,
   time,
-  onActivityChange, onSwipeStart, onSwipeEnd
+  onActivityChange, onSwipeStart, onSwipeEnd, onDoubleClick
 }) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const lastPressTimeRef = useRef(0);
@@ -61,7 +61,7 @@ export const ActivityItem = ({
     const isDoubleClick = currenTime - lastPressTimeRef.current <= TAP_DELAY;
 
     if (isDoubleClick) {
-      console.log("DOUBLE!");
+      onDoubleClick();
     } else {
       lastPressTimeRef.current = currenTime;
     }
