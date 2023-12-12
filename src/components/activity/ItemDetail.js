@@ -10,6 +10,7 @@ export const ItemDetail = () => {
 
   return (
     <FlowModal
+      fullScreen
       visible={showModal}
       animationType={"fade"}
     >
