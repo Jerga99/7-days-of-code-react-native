@@ -10,6 +10,7 @@ import { usePrevious } from "../utils/functions";
 import { ItemCreate } from "../components/activity/ItemCreate";
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS } from "../variables/styles";
+import { ItemDetail } from "../components/activity/ItemDetail";
 
 export const ActivityHomeScreen = ({isStorageEnabled}) => {
   const [activities, setActivities] = useState([]);
@@ -138,6 +139,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
+      <ItemDetail />
       <ItemCreate
         visible={showItemCreate}
         onConfirm={addItem}
