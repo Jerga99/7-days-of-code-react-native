@@ -33,6 +33,11 @@ export const TutorialScreen = ({visible}) => {
       animateSwipe();
     }
 
+    if (step === 2) {
+      directionRef.current = -150;
+      animateSwipe();
+    }
+
     return () => {
       animationRef.current?.reset();
     }
@@ -46,7 +51,15 @@ export const TutorialScreen = ({visible}) => {
       useNativeDriver: false
     });
 
-    const loop = animationRef.current = Animated.loop(swipping);
+    const defaultPos = Animated.timing(pan, {
+      toValue: 0,
+      duration: 0,
+      useNativeDriver: false
+    });
+
+    const sequence = Animated.sequence([defaultPos, swipping])
+
+    const loop = animationRef.current = Animated.loop(sequence);
     loop.start();
   }
 
@@ -81,7 +94,12 @@ export const TutorialScreen = ({visible}) => {
         }
         { step === 2 &&
           <View>
-            <FlowText>Step 2</FlowText>
+            <View style={{marginBottom: 20}}>
+              <FlowText>To stop tracking, swipe left.</FlowText>
+            </View>
+            <Animated.View style={animatedStyle}>
+              <PreviewItem />
+            </Animated.View>
           </View>
         }
         { step === 3 &&
