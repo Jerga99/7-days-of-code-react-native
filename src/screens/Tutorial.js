@@ -24,6 +24,7 @@ export const TutorialScreen = ({visible}) => {
   const [isActive, setIsActive] = useState(false);
   const directionRef = useRef(150);
   const pan = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(1)).current;
   const animationRef = useRef(null);
   const timeoutRef = useRef(null);
 
@@ -57,11 +58,45 @@ export const TutorialScreen = ({visible}) => {
       animateSwipe();
     }
 
+    if (step === 3) {
+      setIsActive(false);
+      animateDoubleTap();
+    }
+
     return () => {
       animationRef.current?.reset();
       clearTimeout(timeoutRef.current);
     }
   }, [step]);
+
+  const animateDoubleTap = () => {
+    const sequence = Animated.sequence([
+      Animated.delay(2000),
+      Animated.timing(scale, {
+        toValue: 1.1,
+        duration: 150,
+        useNativeDriver: false
+      }),
+      Animated.timing(scale, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: false
+      }),
+      Animated.timing(scale, {
+        toValue: 1.1,
+        duration: 150,
+        useNativeDriver: false
+      }),
+      Animated.timing(scale, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: false
+      })
+    ]);
+
+    const loop = animationRef.current = Animated.loop(sequence);
+    loop.start();
+  }
 
   const animateSwipe = () => {
     const swipping = Animated.timing(pan, {
@@ -107,11 +142,18 @@ export const TutorialScreen = ({visible}) => {
   }
 
   const animatedStyle = {
-    transform: [{translateX: pan}]
+    transform: [{translateX: pan}, {scale}]
   }
 
   return (
     <FlowModal visible={visible} bgColor={COLORS.lightBlack}>
+      <View style={{marginBottom: 10}}>
+        <FlowText
+          style={{fontWeight: "bold"}}
+        >
+            Step {step}/{MAX_STEPS}
+        </FlowText>
+      </View>
       <View style={{marginBottom: 10}}>
         { step === 1 &&
           <View>
@@ -135,7 +177,12 @@ export const TutorialScreen = ({visible}) => {
         }
         { step === 3 &&
           <View>
-            <FlowText>Step 3</FlowText>
+            <View style={{marginBottom: 20}}>
+              <FlowText>To see detail, double tap.</FlowText>
+            </View>
+            <Animated.View style={animatedStyle}>
+              <PreviewItem isActive={isActive} />
+            </Animated.View>
           </View>
         }
       </View>
