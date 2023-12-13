@@ -22,6 +22,7 @@ export const TutorialScreen = ({visible}) => {
   const [step, setStep] = useState(1);
   const directionRef = useRef(150);
   const pan = useRef(new Animated.Value(0)).current;
+  const animationRef = useRef(null);
 
   const canGoNext = step < MAX_STEPS;
   const canGoBack = step > 1;
@@ -30,6 +31,10 @@ export const TutorialScreen = ({visible}) => {
     if (step === 1) {
       directionRef.current = 150;
       animateSwipe();
+    }
+
+    return () => {
+      animationRef.current?.reset();
     }
   }, [step]);
 
@@ -41,7 +46,7 @@ export const TutorialScreen = ({visible}) => {
       useNativeDriver: false
     });
 
-    const loop = Animated.loop(swipping);
+    const loop = animationRef.current = Animated.loop(swipping);
     loop.start();
   }
 
