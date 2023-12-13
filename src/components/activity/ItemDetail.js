@@ -29,6 +29,11 @@ export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
     setIsEditing(false);
   }
 
+  const confirmPrompt = () => {
+    setShowPrompt(false);
+    setShowModal(false);
+  }
+
   return (
     <FlowModal
       fullScreen
@@ -99,6 +104,8 @@ export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
       <ConfirmationModal
         visible={showPrompt}
         message={"Are you sure you want to delete this item?"}
+        onConfirm={confirmPrompt}
+        onCancel={() => setShowPrompt(false)}
       />
       <View>
         <FlowButton
