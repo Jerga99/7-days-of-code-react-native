@@ -1,7 +1,7 @@
-import { View } from "react-native"
+import { Animated, View } from "react-native"
 import { FlowButton, FlowModal, FlowRow, FlowText } from "../components/overrides"
 import { ActivityItem } from "../components/activity/Item";
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { COLORS } from "../variables/styles";
 
 const MAX_STEPS = 3;
@@ -20,9 +20,30 @@ const PreviewItem = () =>
 
 export const TutorialScreen = ({visible}) => {
   const [step, setStep] = useState(1);
+  const directionRef = useRef(150);
+  const pan = useRef(new Animated.Value(0)).current;
 
   const canGoNext = step < MAX_STEPS;
   const canGoBack = step > 1;
+
+  useEffect(() => {
+    if (step === 1) {
+      directionRef.current = 150;
+      animateSwipe();
+    }
+  }, [step]);
+
+  const animateSwipe = () => {
+    const swipping = Animated.timing(pan, {
+      toValue: directionRef.current,
+      delay: 1000,
+      duration: 2000,
+      useNativeDriver: false
+    });
+
+    const loop = Animated.loop(swipping);
+    loop.start();
+  }
 
   const goNext = () => {
     if (canGoNext) {
@@ -36,6 +57,10 @@ export const TutorialScreen = ({visible}) => {
     }
   }
 
+  const animatedStyle = {
+    transform: [{translateX: pan}]
+  }
+
   return (
     <FlowModal visible={visible} bgColor={COLORS.lightBlack}>
       <View style={{marginBottom: 10}}>
@@ -44,7 +69,9 @@ export const TutorialScreen = ({visible}) => {
             <View style={{marginBottom: 20}}>
               <FlowText>To start tracking, swipe right.</FlowText>
             </View>
-            <PreviewItem />
+            <Animated.View style={animatedStyle}>
+              <PreviewItem />
+            </Animated.View>
           </View>
         }
         { step === 2 &&
