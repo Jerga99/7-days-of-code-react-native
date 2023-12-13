@@ -38,3 +38,25 @@ export function generateRandomId(length = 10) {
 
   return randomId;
 }
+
+export function getCurrentDate() {
+  const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr',
+    'May', 'Jun', 'Jul', 'Aug',
+    'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
+  const dayNames = [
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+    'Thursday', 'Friday', 'Saturday'
+  ];
+
+  const currentDate = new Date();
+
+  const day = dayNames[currentDate.getDay()];
+  const month = monthNames[currentDate.getMonth()];
+  const date = currentDate.getDate();
+
+  const formattedDate = `${day}, ${month} ${date}`;
+  return formattedDate;
+}

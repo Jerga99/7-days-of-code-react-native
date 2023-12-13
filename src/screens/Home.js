@@ -6,7 +6,7 @@ import defaultItems from "../data/activities.json";
 import { FlowButton, FlowRow, FlowText } from "../components/overrides";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { loadDayFlowItems, storeDayFlowItems } from "../storage";
-import { usePrevious } from "../utils/functions";
+import { getCurrentDate, usePrevious } from "../utils/functions";
 import { ItemCreate } from "../components/activity/ItemCreate";
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, SIZES } from "../variables/styles";
@@ -170,6 +170,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
+      <FlowText style={{color: COLORS.lightGray}}>{getCurrentDate()}</FlowText>
       <ItemDetail
         focusedItem={focusedItem}
         time={time}
