@@ -13,6 +13,7 @@ import { TutorialScreen } from './src/screens/Tutorial';
 
 export default function App() {
   const [isStorageEnabled, setIsStorageEnabled] = useState(null);
+  const [isTutortialWatched, setIsTutorialWatched] = useState(false);
 
   useEffect(() => {
     const checkStorage = async () => {
@@ -34,8 +35,16 @@ export default function App() {
         {isStorageEnabled == null ?
           <></> :
           <>
-            <TutorialScreen visible={true} />
-            <ActivityHomeScreen isStorageEnabled={isStorageEnabled} />
+            { !isTutortialWatched &&
+            <TutorialScreen
+              onSkip={() => setIsTutorialWatched(true)}
+              visible={true}
+            />
+            }
+            <ActivityHomeScreen
+              onOpenTutorial={() => setIsTutorialWatched(false)}
+              isStorageEnabled={isStorageEnabled}
+            />
           </>
         }
         <StatusBar style="light" />

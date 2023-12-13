@@ -12,7 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, SIZES } from "../variables/styles";
 import { ItemDetail } from "../components/activity/ItemDetail";
 
-export const ActivityHomeScreen = ({isStorageEnabled}) => {
+export const ActivityHomeScreen = ({isStorageEnabled, onOpenTutorial}) => {
   const [activities, setActivities] = useState([]);
   const [focusedItem, setFocusedItem] = useState(null);
   const [time, setTime] = useState(0);
@@ -170,7 +170,15 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
 
   return (
     <View style={styles.screenContainer}>
-      <FlowText style={{color: COLORS.lightGray}}>{getCurrentDate()}</FlowText>
+      <FlowRow style={{justifyContent: "space-between"}}>
+        <FlowText style={{color: COLORS.lightGray}}>{getCurrentDate()}</FlowText>
+        <FlowButton
+          onPressIn={onOpenTutorial}
+          ghost
+          type="warning"
+          content={"Check Tutorial"}
+        />
+      </FlowRow>
       <ItemDetail
         focusedItem={focusedItem}
         time={time}

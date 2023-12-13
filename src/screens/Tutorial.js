@@ -2,7 +2,8 @@ import { Animated, View } from "react-native"
 import { FlowButton, FlowModal, FlowRow, FlowText } from "../components/overrides"
 import { ActivityItem } from "../components/activity/Item";
 import { useEffect, useRef, useState } from "react"
-import { COLORS } from "../variables/styles";
+import { COLORS, SIZES } from "../variables/styles";
+import { Ionicons } from '@expo/vector-icons';
 
 const MAX_STEPS = 3;
 
@@ -20,7 +21,7 @@ const PreviewItem = ({isActive}) =>
     onDoubleClick={empty}
   />
 
-export const TutorialScreen = ({visible}) => {
+export const TutorialScreen = ({visible, onSkip}) => {
   const [step, setStep] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const directionRef = useRef(150);
@@ -142,19 +143,32 @@ export const TutorialScreen = ({visible}) => {
     }
   }
 
+  const skip = () => {
+    onSkip();
+  }
+
   const animatedStyle = {
     transform: [{translateX: pan}, {scale}]
   }
 
   return (
     <FlowModal visible={visible} bgColor={COLORS.lightBlack}>
-      <View style={{marginBottom: 10}}>
+      <FlowRow style={{marginBottom: 10, justifyContent: "space-between"}}>
         <FlowText
           style={{fontWeight: "bold"}}
         >
             Step {step}/{MAX_STEPS}
         </FlowText>
-      </View>
+        <FlowButton
+          onPressIn={skip}
+          size={SIZES.fontLarge}
+          ghost
+          type={"danger"}
+          content={(props) =>
+            <Ionicons name="ios-close-circle-outline" {...props} />
+          }
+        />
+      </FlowRow>
       <View style={{marginBottom: 10}}>
         { step === 1 &&
           <View>
