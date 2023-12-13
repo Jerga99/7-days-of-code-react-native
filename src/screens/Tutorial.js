@@ -8,10 +8,11 @@ const MAX_STEPS = 3;
 
 const empty = () => {}
 
-const PreviewItem = () =>
+const PreviewItem = ({isActive}) =>
   <ActivityItem
     title={"Preview"}
     time={0}
+    isActive={isActive}
     onActivityChange={empty}
     onSwipeStart={empty}
     onSwipeEnd={empty}
@@ -20,6 +21,7 @@ const PreviewItem = () =>
 
 export const TutorialScreen = ({visible}) => {
   const [step, setStep] = useState(1);
+  const [isActive, setIsActive] = useState(false);
   const directionRef = useRef(150);
   const pan = useRef(new Animated.Value(0)).current;
   const animationRef = useRef(null);
@@ -29,11 +31,13 @@ export const TutorialScreen = ({visible}) => {
 
   useEffect(() => {
     if (step === 1) {
+      setIsActive(false);
       directionRef.current = 150;
       animateSwipe();
     }
 
     if (step === 2) {
+      setIsActive(true);
       directionRef.current = -150;
       animateSwipe();
     }
@@ -57,8 +61,19 @@ export const TutorialScreen = ({visible}) => {
       useNativeDriver: false
     });
 
-    const sequence = Animated.sequence([defaultPos, swipping])
+    pan.addListener(({value}) => {
+      if (value === directionRef.current) {
+        if (step === 1) {
+          setIsActive(true);
+        }
 
+        if (step === 2) {
+          setIsActive(false);
+        }
+      }
+    });
+
+    const sequence = Animated.sequence([defaultPos, swipping])
     const loop = animationRef.current = Animated.loop(sequence);
     loop.start();
   }
@@ -88,7 +103,7 @@ export const TutorialScreen = ({visible}) => {
               <FlowText>To start tracking, swipe right.</FlowText>
             </View>
             <Animated.View style={animatedStyle}>
-              <PreviewItem />
+              <PreviewItem isActive={isActive}/>
             </Animated.View>
           </View>
         }
@@ -98,7 +113,7 @@ export const TutorialScreen = ({visible}) => {
               <FlowText>To stop tracking, swipe left.</FlowText>
             </View>
             <Animated.View style={animatedStyle}>
-              <PreviewItem />
+              <PreviewItem isActive={isActive} />
             </Animated.View>
           </View>
         }
