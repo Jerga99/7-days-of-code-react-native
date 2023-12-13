@@ -1,8 +1,22 @@
 import { View } from "react-native"
 import { FlowButton, FlowModal, FlowRow, FlowText } from "../components/overrides"
+import { ActivityItem } from "../components/activity/Item";
 import { useState } from "react"
+import { COLORS } from "../variables/styles";
 
 const MAX_STEPS = 3;
+
+const empty = () => {}
+
+const PreviewItem = () =>
+  <ActivityItem
+    title={"Preview"}
+    time={0}
+    onActivityChange={empty}
+    onSwipeStart={empty}
+    onSwipeEnd={empty}
+    onDoubleClick={empty}
+  />
 
 export const TutorialScreen = ({visible}) => {
   const [step, setStep] = useState(1);
@@ -23,16 +37,14 @@ export const TutorialScreen = ({visible}) => {
   }
 
   return (
-    <FlowModal visible={visible}>
+    <FlowModal visible={visible} bgColor={COLORS.lightBlack}>
       <View style={{marginBottom: 10}}>
-        <View>
-          <FlowText>
-            Welcome to tutorial!
-          </FlowText>
-        </View>
         { step === 1 &&
           <View>
-            <FlowText>Step 1</FlowText>
+            <View style={{marginBottom: 20}}>
+              <FlowText>To start tracking, swipe right.</FlowText>
+            </View>
+            <PreviewItem />
           </View>
         }
         { step === 2 &&
