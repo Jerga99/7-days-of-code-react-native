@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { COLORS, SIZES } from "../../variables/styles";
 import { formatTime } from "../../utils/functions";
 import { Ionicons } from '@expo/vector-icons';
+import { ConfirmationModal } from "../common/ConfirmationModal";
 
 
 export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
   const [showModal, setShowModal] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -94,8 +96,13 @@ export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
           }
         </View>
       </FlowHighlightView>
+      <ConfirmationModal
+        visible={showPrompt}
+        message={"Are you sure you want to delete this item?"}
+      />
       <View>
         <FlowButton
+          onPressIn={() => setShowPrompt(true)}
           type={"danger"}
           style={styles.deleteButton}
           content={(props) =>
