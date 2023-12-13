@@ -138,11 +138,28 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     });
   }
 
+  const updateItem = (itemData) => {
+    setActivities(activities => {
+      const newActivities = activities.map(a => {
+        if (a.id === itemData.id) {
+          return {...a, ...itemData}
+        } else {
+          return a;
+        }
+      });
+
+      updateTimeOnActiveItem(newActivities);
+      saveToStorage(newActivities);
+      return newActivities;
+    });
+  }
+
   return (
     <View style={styles.screenContainer}>
       <ItemDetail
         focusedItem={focusedItem}
         time={time}
+        onItemEdit={updateItem}
       />
       <ItemCreate
         visible={showItemCreate}

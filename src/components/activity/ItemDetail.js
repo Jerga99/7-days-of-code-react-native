@@ -7,7 +7,7 @@ import { formatTime } from "../../utils/functions";
 import { Ionicons } from '@expo/vector-icons';
 
 
-export const ItemDetail = ({focusedItem, time}) => {
+export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
@@ -23,6 +23,7 @@ export const ItemDetail = ({focusedItem, time}) => {
   }, [focusedItem]);
 
   const confirm = () => {
+    onItemEdit({...focusedItem, title, description});
     setIsEditing(false);
   }
 
