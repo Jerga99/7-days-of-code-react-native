@@ -25,9 +25,24 @@ export const TutorialScreen = ({visible}) => {
   const directionRef = useRef(150);
   const pan = useRef(new Animated.Value(0)).current;
   const animationRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const canGoNext = step < MAX_STEPS;
   const canGoBack = step > 1;
+
+  useEffect(() => {
+    if (step === 1 && isActive) {
+      timeoutRef.current = setTimeout(() => {
+        setIsActive(false);
+      }, 900);
+    }
+
+    if (step === 2 && !isActive) {
+      timeoutRef.current = setTimeout(() => {
+        setIsActive(true);
+      }, 900);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     if (step === 1) {
@@ -44,6 +59,7 @@ export const TutorialScreen = ({visible}) => {
 
     return () => {
       animationRef.current?.reset();
+      clearTimeout(timeoutRef.current);
     }
   }, [step]);
 
