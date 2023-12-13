@@ -16,11 +16,13 @@ export const ActivityItem = ({
   id,
   isActive,
   time,
+  controls,
   onActivityChange, onSwipeStart, onSwipeEnd, onDoubleClick
 }) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const lastPressTimeRef = useRef(0);
   const isSwipping = useRef(false);
+  const canControl = controls ?? true;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -71,6 +73,8 @@ export const ActivityItem = ({
     { backgroundColor: COLORS.semiDarkGray } :
     { backgroundColor: COLORS.darkGray }
 
+  const handlers = canControl ? panResponder.panHandlers : null;
+
   return (
     <Animated.View
       onPointerDown={handlePress}
@@ -79,7 +83,7 @@ export const ActivityItem = ({
           handlePress()
         }
       }}
-      {...panResponder.panHandlers}
+      {...handlers}
       style={{
         touchAction: "none",
         userSelect: "none",

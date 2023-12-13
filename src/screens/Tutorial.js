@@ -10,6 +10,7 @@ const empty = () => {}
 
 const PreviewItem = ({isActive}) =>
   <ActivityItem
+    controls={false}
     title={"Preview"}
     time={0}
     isActive={isActive}
