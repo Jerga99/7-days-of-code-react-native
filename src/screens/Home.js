@@ -173,6 +173,7 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
       <FlowRow style={styles.listHeading}>
         <FlowText style={styles.text}>Activities</FlowText>
         <FlowButton
+          style={{position: "absolute", right: 0}}
           ghost
           size={SIZES.fontExtraLarge}
           type="primary"
