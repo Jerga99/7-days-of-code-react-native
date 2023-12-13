@@ -8,6 +8,7 @@ import { ActivityHomeScreen } from './src/screens/Home';
 import { COLORS } from './src/variables/styles';
 import { useEffect, useState } from 'react';
 import { isAsyncStorageEnabled } from './src/storage';
+import { TutorialScreen } from './src/screens/Tutorial';
 
 
 export default function App() {
@@ -32,7 +33,10 @@ export default function App() {
       <View style={{...styles.container, ...containerStyle}}>
         {isStorageEnabled == null ?
           <></> :
-          <ActivityHomeScreen isStorageEnabled={isStorageEnabled} />
+          <>
+            <TutorialScreen visible={true} />
+            <ActivityHomeScreen isStorageEnabled={isStorageEnabled} />
+          </>
         }
         <StatusBar style="light" />
       </View>
