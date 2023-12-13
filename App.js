@@ -7,13 +7,13 @@ import { StyleSheet, SafeAreaView, View, Platform } from 'react-native';
 import { ActivityHomeScreen } from './src/screens/Home';
 import { COLORS } from './src/variables/styles';
 import { useEffect, useState } from 'react';
-import { isAsyncStorageEnabled } from './src/storage';
+import { isAsyncStorageEnabled, loadIsTutorialWatched } from './src/storage';
 import { TutorialScreen } from './src/screens/Tutorial';
 
 
 export default function App() {
   const [isStorageEnabled, setIsStorageEnabled] = useState(null);
-  const [isTutortialWatched, setIsTutorialWatched] = useState(false);
+  const [isTutortialWatched, setIsTutorialWatched] = useState(null);
 
   useEffect(() => {
     const checkStorage = async () => {
@@ -21,6 +21,12 @@ export default function App() {
       setIsStorageEnabled(isEnabled);
     }
 
+    const checkTutorial = async () => {
+      const data = await loadIsTutorialWatched();
+      setIsTutorialWatched(!!data);
+    }
+
+    checkTutorial();
     checkStorage();
   }, []);
 
@@ -32,7 +38,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={{...styles.container, ...containerStyle}}>
-        {isStorageEnabled == null ?
+        {isStorageEnabled == null || isTutortialWatched == null ?
           <></> :
           <>
             { !isTutortialWatched &&

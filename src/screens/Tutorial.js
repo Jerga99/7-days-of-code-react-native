@@ -4,6 +4,7 @@ import { ActivityItem } from "../components/activity/Item";
 import { useEffect, useRef, useState } from "react"
 import { COLORS, SIZES } from "../variables/styles";
 import { Ionicons } from '@expo/vector-icons';
+import { storeIsTutorialWatched } from "../storage";
 
 const MAX_STEPS = 3;
 
@@ -145,6 +146,7 @@ export const TutorialScreen = ({visible, onSkip}) => {
 
   const skip = () => {
     onSkip();
+    storeIsTutorialWatched();
   }
 
   const animatedStyle = {

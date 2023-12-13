@@ -28,6 +28,15 @@ const loadDayFlowItems = async () => {
   return loadData("dayFlowItems")
 }
 
+const storeIsTutorialWatched = async () => {
+  return storeData("dayFlowTutorial", 1);
+}
+
+const loadIsTutorialWatched = async () => {
+  const data = await loadData("dayFlowTutorial")
+  return data;
+}
+
 export const isAsyncStorageEnabled = async () => {
   try {
     await AsyncStorage.setItem("flowTestKey", "testFlowValue");
@@ -39,4 +48,9 @@ export const isAsyncStorageEnabled = async () => {
   }
 }
 
-export { storeData, loadData, storeDayFlowItems, loadDayFlowItems };
+export {
+  storeData,
+  loadData,
+  storeDayFlowItems, loadDayFlowItems,
+  storeIsTutorialWatched, loadIsTutorialWatched
+};
