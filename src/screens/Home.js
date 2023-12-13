@@ -154,12 +154,27 @@ export const ActivityHomeScreen = ({isStorageEnabled}) => {
     });
   }
 
+  const deleteItem = (itemData) => {
+    if (activeItem && activeItem?.id === itemData?.id) {
+      cancelAnimationFrame(timerRequestRef.current);
+      timeRef.current = 0;
+      setTime(0);
+    }
+
+    setActivities(activities => {
+      const newActivities = activities.filter(a => a.id != itemData.id);
+      saveToStorage(newActivities);
+      return newActivities;
+    });
+  }
+
   return (
     <View style={styles.screenContainer}>
       <ItemDetail
         focusedItem={focusedItem}
         time={time}
         onItemEdit={updateItem}
+        onItemDelete={deleteItem}
       />
       <ItemCreate
         visible={showItemCreate}

@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ConfirmationModal } from "../common/ConfirmationModal";
 
 
-export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
+export const ItemDetail = ({focusedItem, time, onItemEdit, onItemDelete}) => {
   const [showModal, setShowModal] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +32,7 @@ export const ItemDetail = ({focusedItem, time, onItemEdit}) => {
   const confirmPrompt = () => {
     setShowPrompt(false);
     setShowModal(false);
+    onItemDelete({...focusedItem});
   }
 
   return (
