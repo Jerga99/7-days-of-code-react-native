@@ -1,13 +1,10 @@
 
-
-
-
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, View, Platform } from 'react-native';
 import { ActivityHomeScreen } from './src/screens/Home';
 import { COLORS } from './src/variables/styles';
 import { useEffect, useState } from 'react';
-import { isAsyncStorageEnabled, loadIsTutorialWatched } from './src/storage';
+import { clearStorage, isAsyncStorageEnabled, loadIsTutorialWatched } from './src/storage';
 import { TutorialScreen } from './src/screens/Tutorial';
 
 

@@ -48,9 +48,13 @@ export const isAsyncStorageEnabled = async () => {
   }
 }
 
+const clearStorage = () => {
+  AsyncStorage.clear();
+}
+
 export {
   storeData,
   loadData,
   storeDayFlowItems, loadDayFlowItems,
-  storeIsTutorialWatched, loadIsTutorialWatched
+  storeIsTutorialWatched, loadIsTutorialWatched, clearStorage
 };
